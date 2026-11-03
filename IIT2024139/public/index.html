@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SQL Injection Authentication Bypass — local demonstration" />
+  <title>Login Portal — SQL Injection Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Mode Banner ─────────────────────────────────────── -->
+  <div id="mode-banner" class="banner banner--secure" aria-live="polite">
+    🔒 SECURE MODE — Parameterized queries are active
+  </div>
+
+  <!-- ── Login Card ──────────────────────────────────────── -->
+  <main class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Left: Quick-fill sidebar -->
+      <aside class="quickfill-panel">
+        <h2 class="quickfill-heading">🧪 Quick-Fill</h2>
+        <p class="quickfill-hint">Pick a scenario to auto-fill the form.</p>
+        <div class="quickfill-buttons">
+          <button type="button" class="btn-qf btn-qf--valid"   data-user="alice"
+                  data-pass="password456">✅ Valid Login (alice)</button>
+          <button type="button" class="btn-qf btn-qf--wrong"   data-user="alice"
+                  data-pass="wrongpassword">❌ Wrong Password</button>
+          <button type="button" class="btn-qf btn-qf--inject"  data-user="' OR '1'='1' --"
+                  data-pass="anything">💉 SQL Injection Attack</button>
+        </div>
+      </aside>
+
+      <!-- Right: Form -->
+      <section class="form-panel">
+        <!-- Lock icon -->
+        <div class="lock-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+               viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+
+        <h1 class="card-title">Login Portal</h1>
+        <p class="card-subtitle">SQL Injection Demonstration</p>
+
+        <!-- Feedback area -->
+        <div id="message" class="message" role="alert"></div>
+
+        <!-- Login form -->
+        <form id="login-form" autocomplete="off" novalidate>
+          <div class="field">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text"
+                   placeholder="Enter username" required />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password"
+                   placeholder="Enter password" required />
+          </div>
+
+          <button id="btn-login" type="submit" class="btn-primary">
+            Sign In →
+          </button>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

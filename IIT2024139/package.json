@@ -1,0 +1,30 @@
+{
+  "name": "sql-injection-assignment",
+  "version": "1.0.0",
+  "description": "SQL Injection Authentication Bypass — Cyber Security Assignment (IT-30001)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:vulnerable": "set MODE=vulnerable&& node server.js",
+    "start:secure": "set MODE=secure&& node server.js",
+    "test": "jest --forceExit --detectOpenHandles",
+    "generate-pdf": "python generate_script.py",
+    "generate-study-guide": "node docs/generate_study_guide.js"
+  },
+  "keywords": [
+    "sql-injection",
+    "cybersecurity",
+    "assignment"
+  ],
+  "author": "Krish Dhaked (IIB2024008)",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "pdfkit": "^0.20.2",
+    "supertest": "^6.3.4"
+  }
+}

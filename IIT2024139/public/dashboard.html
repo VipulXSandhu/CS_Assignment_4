@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Welcome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #f0f2f5;
+      color: #1e293b;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Top Navbar ──────────────────────────────────────── */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 32px;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e6ec;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      animation: fadeDown 0.4s ease-out;
+    }
+
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-12px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #4f46e5;
+    }
+
+    .nav-brand-icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-user-name {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    .nav-user-name strong {
+      color: #1e293b;
+    }
+
+    .btn-logout {
+      padding: 9px 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: #dc2626;
+      background: #fef2f2;
+      border: 1.5px solid #fecaca;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all .25s ease;
+    }
+
+    .btn-logout:hover {
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* ── Main Content ───────────────────────────────────── */
+    .dashboard-main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 60px;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── Hero Welcome ───────────────────────────────────── */
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .avatar {
+      width: 84px; height: 84px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; font-weight: 700; color: #fff;
+      text-transform: uppercase;
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
+    }
+
+    .greeting {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+
+    .greeting span { color: #4f46e5; }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: #64748b;
+    }
+
+    /* ── Info Cards Grid ────────────────────────────────── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .info-card {
+      background: #ffffff;
+      border: 1px solid #e2e6ec;
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .info-card:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.08);
+      transform: translateY(-3px);
+    }
+
+    .info-card .card-icon {
+      width: 48px; height: 48px;
+      margin: 0 auto 14px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .info-card:nth-child(1) .card-icon { background: #eef2ff; }
+    .info-card:nth-child(2) .card-icon { background: #fef3c7; }
+    .info-card:nth-child(3) .card-icon { background: #ecfdf5; }
+
+    .info-card .card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-card .card-value {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #1e293b;
+      line-height: 1.4;
+    }
+
+    /* ── Footer Timestamp ───────────────────────────────── */
+    .dashboard-footer {
+      text-align: center;
+      margin-top: 36px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .navbar {
+        padding: 12px 16px;
+      }
+
+      .nav-user-name {
+        display: none;
+      }
+
+      .dashboard-main {
+        padding: 32px 16px 40px;
+      }
+
+      .greeting {
+        font-size: 1.5rem;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .info-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        text-align: left;
+        padding: 18px 20px;
+      }
+
+      .info-card .card-icon {
+        margin: 0;
+        flex-shrink: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Navbar ─────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="nav-brand-icon">🛡️</div>
+      SQL Injection Demo
+    </div>
+    <div class="nav-user">
+      <span class="nav-user-name">Signed in as <strong id="nav-username"></strong></span>
+      <button class="btn-logout" onclick="location.href='/'">⬅ Logout</button>
+    </div>
+  </nav>
+
+  <!-- ── Main Content ───────────────────────────────────── -->
+  <div class="dashboard-main">
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="avatar" id="avatar"></div>
+      <p class="greeting">Hello, <span id="username-display"></span> 👋</p>
+      <p class="subtitle">How are you?</p>
+    </div>
+
+    <!-- Info Cards Grid -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="card-icon">📋</div>
+        <div class="card-label">Assignment</div>
+        <div class="card-value">Assignment 4 — SQL Injection Demo</div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-icon">🎓</div>
+        <div class="card-label">Course</div>
+        <div class="card-value">Cyber Security (IT-30001)</div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-icon">👤</div>
+        <div class="card-label">Logged In As</div>
+        <div class="card-value" id="role-display"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="dashboard-footer">
+      Session started at <span id="timestamp"></span>
+    </div>
+
+  </div>
+
+  <script>
+    const params   = new URLSearchParams(window.location.search);
+    const username = params.get('user') || 'Guest';
+    const role     = params.get('role') || 'user';
+
+    document.getElementById('username-display').textContent = username;
+    document.getElementById('role-display').textContent     = username + ' (' + role + ')';
+    document.getElementById('avatar').textContent           = username.charAt(0);
+    document.getElementById('nav-username').textContent     = username;
+    document.getElementById('timestamp').textContent        = new Date().toLocaleString();
+  </script>
+</body>
+</html>
