@@ -9,7 +9,7 @@ Instructor: Dr. Soumyadev Maity.
 
 | Member Name | Roll Number | Category | Variant Implemented | Folder |
 | :--- | :--- | :--- | :--- | :--- |
-| *(Your Name)* | *(Your Roll No)* | **Cross-Site Scripting (XSS)** | **Variant 2: Reflected XSS** | `XSS/` |
+| *Hrishav Raj* | *IIT2024136* | **Cross-Site Scripting (XSS)** | **Variant 2: Reflected XSS** | `XSS/` |
 
 ---
 
