@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Course Catalog & Syllabus Search</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="card">
+    <h2>Academic Course Catalog & Syllabus Search</h2>
+    <div class="subtitle">Search university courses, syllabus outlines, and faculty listings</div>
+
+    <!-- Mode Selector at Top -->
+    <div class="mode-bar">
+      <span>Mode:</span>
+      <label>
+        <input type="radio" name="modeSelector" value="mode1" <!-- MODE_1_CHECKED --> onchange="switchMode('mode1')">
+        Mode 1
+      </label>
+      <label>
+        <input type="radio" name="modeSelector" value="mode2" <!-- MODE_2_CHECKED --> onchange="switchMode('mode2')">
+        Mode 2
+      </label>
+    </div>
+
+    <!-- Search Form -->
+    <form class="search-form" method="GET" action="/">
+      <input type="hidden" name="mode" id="formMode" value="<!-- CURRENT_MODE -->">
+      <input type="text" name="q" id="searchInput" placeholder="Search courses (e.g. Security, Networks, CS-20004...)" value="<!-- SEARCH_INPUT_VALUE -->">
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Search Results / Injected Context -->
+    <div id="resultsArea">
+      <!-- RESULTS_PLACEHOLDER -->
+    </div>
+
+    <div class="footer">
+      <span>Academic Portal &bull; IIIT Allahabad</span>
+      <span>Cyber Security (IT-30001)</span>
+    </div>
+  </div>
+
+  <script>
+    function switchMode(newMode) {
+      document.getElementById('formMode').value = newMode;
+      const currentQuery = document.getElementById('searchInput').value;
+      window.location.href = '/?mode=' + encodeURIComponent(newMode) + (currentQuery ? '&q=' + encodeURIComponent(currentQuery) : '');
+    }
+  </script>
+
+</body>
+</html>
+

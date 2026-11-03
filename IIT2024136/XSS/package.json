@@ -1,0 +1,15 @@
+{
+  "name": "reflected-xss-demo",
+  "version": "1.0.0",
+  "description": "Demonstration of Reflected Cross-Site Scripting (XSS) and Context-Aware Output Encoding Defense",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "vulnerable": "node vulnerable_server.js",
+    "secure": "node secure_server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
+
