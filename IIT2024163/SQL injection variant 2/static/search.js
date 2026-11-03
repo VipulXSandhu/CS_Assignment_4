@@ -1,0 +1,1 @@
+document.querySelectorAll('[data-payload]').forEach(button => button.addEventListener('click', () => { const field=document.getElementById('q'); field.value=button.dataset.payload; field.focus(); field.setSelectionRange(field.value.length,field.value.length); }));
