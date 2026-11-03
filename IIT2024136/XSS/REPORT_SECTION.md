@@ -6,8 +6,8 @@
 ---
 
 ### Student Ownership Details
-* **Student Name:** [Your Name]
-* **Roll Number:** [Your Roll No]
+* **Student Name:** Hrishav Raj
+* **Roll Number:** IIT2024136
 * **Vulnerability Category:** Cross-Site Scripting (XSS)
 * **Implemented Variant:** Variant 2 — Reflected XSS
 
