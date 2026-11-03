@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Command Injection Lab</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Network Diagnostic Tool</h1>
+        <p>OS Command Injection Demonstration</p>
+
+        <input type="text" id="ip" placeholder="Enter IP address" value="127.0.0.1">
+
+        <div class="buttons">
+            <button onclick="runTest('vulnerable')">Vulnerable Mode</button>
+            <button onclick="runTest('secure')">Secure Mode</button>
+        </div>
+
+        <h3>Command Output</h3>
+        <pre id="output">Waiting for input...</pre>
+    </div>
+
+    <script>
+        async function runTest(mode) {
+            const ip = document.getElementById("ip").value;
+            const output = document.getElementById("output");
+
+            output.textContent = "Executing...";
+
+            try {
+                const response = await fetch("/" + mode, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ ip })
+                });
+
+                const data = await response.json();
+                output.textContent = data.output;
+            } catch (error) {
+                output.textContent = "Error: " + error.message;
+            }
+        }
+    </script>
+
+</body>
+</html>
