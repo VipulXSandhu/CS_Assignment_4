@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment / secrets (never commit real secrets)
+.env
+.env.local
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Keep the screenshots/ folder but ignore nothing inside by default.
+# (Add your captured PNGs here for submission.)

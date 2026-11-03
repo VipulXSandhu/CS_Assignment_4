@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafeBank — Dashboard</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="brand">
+        🏦 SafeBank
+        <span class="mode-badge mode-{{MODE}}">{{MODE}} mode</span>
+        <a class="logout" href="/logout">Log out</a>
+      </div>
+
+      <div class="card">
+        <h1>Welcome, {{USER}}</h1>
+        <div class="balance">
+          Current balance: <strong>₹<span id="balance">{{BALANCE}}</span></strong>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Transfer money</h2>
+
+        <!--
+          The form below is the LEGITIMATE transfer form.
+
+          * In VULNERABLE mode it submits a GET request to /transfer, matching
+            the insecure endpoint (so you can see normal use and attack use
+            hit the same route). There is no CSRF token.
+
+          * In SECURE mode it submits a POST request and carries a hidden
+            {{CSRF_TOKEN}} synchronizer token that the server validates.
+        -->
+
+        <!-- VULNERABLE legitimate form (GET, no token) -->
+        <form method="GET" action="/transfer" class="mode-only mode-vulnerable-only">
+          <label>Recipient</label>
+          <input type="text" name="to" value="savings-account" />
+          <label>Amount (₹)</label>
+          <input type="number" name="amount" value="500" min="1" />
+          <button type="submit" class="btn">Send (GET — insecure)</button>
+        </form>
+
+        <!-- SECURE legitimate form (POST + CSRF token) -->
+        <form method="POST" action="/transfer" class="mode-only mode-secure-only">
+          <!-- Synchronizer token: unreadable to a cross-origin attacker. -->
+          <input type="hidden" name="_csrf" value="{{CSRF_TOKEN}}" />
+          <label>Recipient</label>
+          <input type="text" name="to" value="savings-account" />
+          <label>Amount (₹)</label>
+          <input type="number" name="amount" value="500" min="1" />
+          <button type="submit" class="btn">Send (POST — protected)</button>
+        </form>
+
+        <p class="muted" id="mode-note"></p>
+      </div>
+    </div>
+
+    <script>
+      // Show only the form that matches the current server mode, and hide the
+      // other, so the dashboard is unambiguous during the demo.
+      var mode = "{{MODE}}";
+      document.querySelectorAll('.mode-only').forEach(function (el) {
+        var show = el.classList.contains('mode-' + mode + '-only');
+        el.style.display = show ? 'block' : 'none';
+      });
+      document.getElementById('mode-note').textContent =
+        mode === 'vulnerable'
+          ? 'Server is in VULNERABLE mode: transfers use GET and have no CSRF protection.'
+          : 'Server is in SECURE mode: transfers use POST and require a valid CSRF token.';
+    </script>
+  </body>
+</html>

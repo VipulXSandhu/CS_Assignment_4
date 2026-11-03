@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafeBank — Login</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="brand">🏦 SafeBank <span class="mode-badge mode-{{MODE}}">{{MODE}} mode</span></div>
+      <div class="card">
+        <h1>Log in</h1>
+        <p class="muted">Demo login — any username/password is accepted.
+           This project studies CSRF, not password security.</p>
+        <!-- Login uses POST. Logging in is itself a state change. -->
+        <form method="POST" action="/login">
+          <label>Username</label>
+          <input type="text" name="username" value="demo" autocomplete="off" />
+          <label>Password</label>
+          <input type="password" name="password" value="password" autocomplete="off" />
+          <button type="submit" class="btn">Log in</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

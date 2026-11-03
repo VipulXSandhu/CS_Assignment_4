@@ -1,0 +1,27 @@
+{
+  "name": "csrf-assignment",
+  "version": "1.0.0",
+  "description": "Educational demonstration of a GET-based CSRF vulnerability and its mitigation (synchronizer token pattern). Built for IIIT Allahabad Cyber Security (IT-30001).",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "start:vulnerable": "MODE=vulnerable node server.js",
+    "start:secure": "MODE=secure node server.js",
+    "attacker": "node attacker.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "csrf",
+    "security",
+    "education",
+    "owasp",
+    "express"
+  ],
+  "author": "Student (IIIT Allahabad)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
+  }
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafeBank — {{TITLE}}</title>
+    <link rel="stylesheet" href="/public/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="brand">
+        🏦 SafeBank
+        <span class="mode-badge mode-{{MODE}}">{{MODE}} mode</span>
+      </div>
+      <div class="card result-{{STATUS}}">
+        <h1>{{TITLE}}</h1>
+        <p class="result-message">{{MESSAGE}}</p>
+        <div class="balance">
+          Current balance: <strong>₹{{BALANCE}}</strong>
+        </div>
+        <a class="btn" href="/dashboard">Back to dashboard</a>
+      </div>
+    </div>
+  </body>
+</html>
